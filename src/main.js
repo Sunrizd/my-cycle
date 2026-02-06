@@ -68,6 +68,7 @@ const actions = {
         localStorage.removeItem('username');
         localStorage.removeItem('role');
         localStorage.removeItem('firstname');
+        state.user = null; // Clear user state
         state.view = 'auth';
         init();
     },

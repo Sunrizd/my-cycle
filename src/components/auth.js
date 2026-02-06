@@ -62,6 +62,8 @@ export function renderAuth(onLoginSuccess) {
         API.setToken(data.token);
         localStorage.setItem('username', data.username);
         localStorage.setItem('role', data.role);
+        if (data.firstname) localStorage.setItem('firstname', data.firstname);
+
         onLoginSuccess();
       } else {
         await API.register(username, password, form.firstname.value);
@@ -70,6 +72,8 @@ export function renderAuth(onLoginSuccess) {
         API.setToken(data.token);
         localStorage.setItem('username', data.username);
         localStorage.setItem('role', data.role);
+        if (data.firstname) localStorage.setItem('firstname', data.firstname);
+
         onLoginSuccess();
       }
     } catch (err) {
