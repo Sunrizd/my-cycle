@@ -1,0 +1,35 @@
+{
+  "name": "my-cycle",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A modern, privacy-focused menstrual cycle tracking application.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sunrizd/my-cycle.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sunrizd/my-cycle/issues"
+  },
+  "homepage": "https://github.com/Sunrizd/my-cycle#readme",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\" --names \"API,WEB\" --prefix \"[{time}] {name}\" --prefix-colors \"blue,green\" --timestamp-format \"YYYY-MM-DD HH:mm:ss\"",
+    "client": "vite --host",
+    "server": "cd server && node index.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "vite": "^7.2.4",
+    "vite-plugin-pwa": "^1.2.0",
+    "vitest": "^4.0.18"
+  }
+}

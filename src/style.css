@@ -1,0 +1,614 @@
+:root {
+  /* Sage Green Theme */
+  --color-bg: #f4f7f5;
+  --color-surface: #ffffff;
+  --color-primary: #8da399; /* Sage */
+  --color-primary-dark: #6b8278;
+  --color-secondary: #d4e0d9; /* Light Sage */
+  --color-accent: #e8b4b8; /* Muted Rose for Period Days */
+  --color-text-main: #2c3e36;
+  --color-text-muted: #6b7c75;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+
+  font-family: 'Outfit', sans-serif;
+
+  /* Phase Colors (Material Inspired for better readability) */
+  --color-primary-light: #e0ece4;
+  
+  /* Period: Pink/Red */
+  --phase-period-bg: #fce4ec; 
+  --phase-period-text: #c2185b;
+
+  /* Follicular: Green */
+  --phase-follicular-bg: #e8f5e9;
+  --phase-follicular-text: #2e7d32;
+
+  /* Fertile: Blue */
+  --phase-fertile-bg: #e3f2fd;
+  --phase-fertile-text: #1565c0;
+
+  /* Ovulation: Purple */
+  --phase-ovulation-bg: #f3e5f5;
+  --phase-ovulation-text: #7b1fa2;
+
+  /* Luteal: Orange */
+  --phase-luteal-bg: #fff3e0;
+  --phase-luteal-text: #ef6c00;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+#app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  /* Sticky properties */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-bg); /* Match body bg to hide scroll behind */
+  padding-top: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  margin-top: -20px; /* Counteract body padding for full edge sticky */
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-primary-dark);
+}
+
+/* History List */
+.history-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.history-item:last-child {
+  border-bottom: none;
+}
+
+.history-date {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: 5px 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+  min-width: 50px;
+}
+
+.history-date .month {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.history-date .day {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.history-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.history-details .duration {
+  font-weight: 600;
+}
+
+.history-details .status {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Dashboard Card */
+.dashboard-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.days-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: conic-gradient(var(--color-secondary) 0%, var(--color-bg) 100%);
+  margin: 0 auto 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.days-circle::before {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+
+.days-number {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.days-label {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+  margin-top: 8px;
+}
+
+.phase-pill {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: var(--color-bg);
+  color: var(--color-primary-dark);
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Action Button */
+.btn-log {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 24px;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+  box-shadow: 0 4px 12px rgba(141, 163, 153, 0.4);
+}
+
+.btn-log:hover {
+  transform: translateY(-2px);
+  background-color: var(--color-primary-dark);
+}
+
+.btn-log:active {
+  transform: translateY(0);
+}
+
+/* Calendar */
+.calendar-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+
+.calendar-day-header {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  padding-bottom: 8px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+  overflow: hidden; /* Ensure corner indicator stays within circle */
+  overflow: hidden; /* Ensure corner indicator stays within circle */
+}
+
+/* Cycle Phases */
+.phase-period {
+  background-color: var(--phase-period-bg);
+  color: var(--phase-period-text);
+}
+
+.phase-follicular {
+  background-color: var(--phase-follicular-bg);
+  color: var(--phase-follicular-text);
+}
+
+.phase-fertile {
+  background-color: var(--phase-fertile-bg);
+  color: var(--phase-fertile-text);
+}
+
+.phase-ovulation {
+  background-color: var(--phase-ovulation-bg);
+  color: var(--phase-ovulation-text);
+  border: 1px solid var(--phase-ovulation-text); /* Highlight ovulation */
+}
+
+.phase-luteal {
+  background-color: var(--phase-luteal-bg);
+  color: var(--phase-luteal-text);
+}
+
+.calendar-day:hover {
+  background-color: var(--color-bg);
+}
+
+.calendar-day.active {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+.calendar-day.predicted {
+  border: 2px dashed var(--color-accent);
+  color: var(--color-accent);
+}
+
+.calendar-day.today {
+  font-weight: 800;
+  color: #000000;
+  box-shadow: inset 0 0 0 3px #000000; /* Reduced thickness for better aesthetics with black */
+  border-radius: 50%;
+}
+
+
+
+.calendar-day.has-note::after {
+  content: '';
+  position: absolute;
+  bottom: 10%; /* Position at bottom */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%);
+
+  width: 5px; /* Slightly smaller dot */
+  height: 5px;
+  background-color: var(--color-text-muted); /* More subtle color */
+  border-radius: 50%;
+
+  /* Reset top/right positioning */
+  top: auto;
+  right: auto;
+  border: none;
+}
+
+.mood-indicator {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 15px; /* Slightly smaller to fit better */
+  background: transparent; /* Remove background to blend in if needed, or keep surface */
+  border-radius: 50%;
+  line-height: 1;
+  padding: 0;
+  box-shadow: none; /* Remove shadow for cleaner look inside bubble */
+}
+
+.empty-day {
+  pointer-events: none;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: var(--shadow-md);
+  transform: translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.modal-overlay.open .modal-container {
+  transform: translateY(0);
+}
+
+.modal-title {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+}
+
+.modal-message {
+  color: var(--color-text-main);
+  margin-bottom: 24px;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-text-muted);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg);
+}
+
+/* Mood Selector */
+.mood-selector {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.mood-btn {
+  background: none;
+  border: 2px solid transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+  line-height: 1;
+}
+
+.mood-btn:hover {
+  transform: scale(1.2);
+  background-color: var(--color-bg);
+}
+
+.mood-btn.selected {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+/* Auth Styles */
+.auth-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.auth-toggle button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.auth-toggle button.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.form-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--color-text-muted);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box; /* Important for padding */
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(141, 163, 153, 0.2);
+}
+
+/* Unified Button Styles */
+.btn-nav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: color 0.2s;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.btn-nav:hover {
+  color: var(--color-primary-dark);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.btn-nav.primary {
+  color: var(--color-primary);
+}
+
+.btn-action {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+  box-shadow: 0 2px 8px rgba(141, 163, 153, 0.3);
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+  background-color: var(--color-primary-dark);
+}
+
+.phase-period.predicted,
+.phase-ovulation.predicted,
+.phase-fertile.predicted,
+.phase-follicular.predicted,
+.phase-luteal.predicted {
+    opacity: 0.5;
+    border: 1px dashed currentColor;
+}
+
+/* Footer Global */
+.app-footer {
+    text-align: center;
+    margin-top: auto; /* Push to bottom if flex container allows */
+    padding-top: 40px;
+    padding-bottom: 20px;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+.app-footer p {
+    margin: 0;
+}
+
+.app-footer a {
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.app-footer a:hover {
+    color: var(--color-primary-dark);
+}
